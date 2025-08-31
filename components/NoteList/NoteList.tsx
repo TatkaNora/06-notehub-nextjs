@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { MouseEvent } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteNote } from "@/lib/api/api";
+import { deleteNote } from "@/lib/api";
 import { Note } from "@/types/note";
 import css from "./NoteList.module.css";
 
