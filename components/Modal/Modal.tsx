@@ -15,7 +15,6 @@ export default function Modal({
     const [container, setContainer] = useState<HTMLElement | null>(null);
 
     useEffect(() => {
-        // Працюємо лише в браузері
         if (typeof document === "undefined") return;
 
         let el = document.getElementById("modal-root") as HTMLElement | null;
@@ -30,8 +29,13 @@ export default function Modal({
             if (e.key === "Escape") onClose();
         }
         window.addEventListener("keydown", onKey);
+
+        const prevOverflow = document.body.style.overflow;
+        document.body.style.overflow = "hidden";
+
         return () => {
             window.removeEventListener("keydown", onKey);
+            document.body.style.overflow = prevOverflow;
         };
     }, [onClose]);
 
@@ -42,7 +46,12 @@ export default function Modal({
     if (!container) return null;
 
     return createPortal(
-        <div className={css.backdrop} role="dialog" aria-modal="true" onClick={onBackdrop}>
+        <div
+            className={css.backdrop}
+            role="dialog"
+            aria-modal="true"
+            onClick={onBackdrop}
+        >
             <div className={css.modal}>{children}</div>
         </div>,
         container
